@@ -1,4 +1,10 @@
 import { logInfo, logError } from "../utils/logger.js";
+import { addRealGasPrice } from "../utils/dataStore.js";
+
+function parseGasPrice(priceString) {
+    const match = priceString.match(/\$([\d,]+(?:\.\d+)?)/);
+    return match ? parseFloat(match[1].replace(/,/g, "")) : null;
+}
 
 export async function getGasPrice(tools) {
     try {
@@ -6,8 +12,13 @@ export async function getGasPrice(tools) {
         if (!getPriceTool) {
             throw new Error("get_price tool not found in toolkit.");
         }
-        const price = await getPriceTool.call({ symbol: "ETH" });
-        return price;
+
+        const response = await getPriceTool.call({ symbol: "ETH" });
+        const gasPrice = parseGasPrice(response);
+
+        addRealGasPrice(gasPrice, null);
+
+        return gasPrice;
     } catch (error) {
         logError("Failed to fetch gas price", error);
         return null;
