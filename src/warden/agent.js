@@ -3,8 +3,9 @@ import { WardenToolkit } from "@wardenprotocol/warden-langchain";
 import { CONFIG } from "../config/config.js";
 import { logInfo, logError } from "../utils/logger.js";
 import { createAI } from "../services/aiService.js";
+import { getGasPrice } from "../services/gasPriceService.js";
 
-export function startWardenAgent() {
+export async function startWardenAgent() {
     try {
         if (!CONFIG.PRIVATE_KEY.startsWith("0x") || CONFIG.PRIVATE_KEY.length !== 66) {
             throw new Error("Invalid PRIVATE_KEY! It must be 64 hex characters and start with 0x.");
@@ -21,6 +22,15 @@ export function startWardenAgent() {
             logInfo("AI-Powered Warden Agent is Ready!");
         } else {
             logError("AI Agent failed to initialize.");
+        }
+
+        try {
+            const gasPrice = await getGasPrice(tools);
+            if (gasPrice) {
+                logInfo(`Live Gas Price: ${gasPrice}`);
+            }
+        } catch (error) {
+            logError("Gas price monitoring failed", error);
         }
 
     } catch (error) {
