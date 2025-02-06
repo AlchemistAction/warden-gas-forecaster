@@ -1,5 +1,4 @@
 import { logInfo, logError } from "../utils/logger.js";
-import { addRealGasPrice } from "../utils/dataStore.js";
 
 function parseGasPrice(priceString) {
     const match = priceString.match(/\$([\d,]+(?:\.\d+)?)/);
@@ -15,8 +14,7 @@ export async function getGasPrice(tools) {
 
         const response = await getPriceTool.call({ symbol: "ETH" });
         const gasPrice = parseGasPrice(response);
-
-        addRealGasPrice(gasPrice, null);
+        logInfo(`Live Gas Price: ${gasPrice}`);
 
         return gasPrice;
     } catch (error) {

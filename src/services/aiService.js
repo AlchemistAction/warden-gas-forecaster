@@ -5,7 +5,7 @@ import { WardenToolkit } from "@wardenprotocol/warden-langchain";
 import { CONFIG } from "../config/config.js";
 import { logInfo, logError } from "../utils/logger.js";
 import { HumanMessage } from "@langchain/core/messages";
-import { addPredictedGasPrice, getRealGasPriceHistory } from "../utils/dataStore.js";
+import { getRealGasPriceHistory } from "../utils/dataStore.js";
 
 const llm = new ChatOpenAI({
     model: "gpt-4o-mini",
@@ -77,7 +77,6 @@ export async function analyzeGasTrends(agent, config) {
             const predictedPrice = parseFloat(match[0]);
             logInfo(`AI Predicted Gas Price: ${predictedPrice}`);
 
-            addPredictedGasPrice(predictedPrice);
             return predictedPrice;
         } else {
             logError(`Invalid AI response: ${responseText}`);

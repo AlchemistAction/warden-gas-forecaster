@@ -23,7 +23,9 @@
     "@langchain/openai": "^0.4.2",
     "@wardenprotocol/warden-agent-kit-core": "^0.0.24",
     "@wardenprotocol/warden-langchain": "^0.0.7",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "winston": "^3.17.0"
   }
 }

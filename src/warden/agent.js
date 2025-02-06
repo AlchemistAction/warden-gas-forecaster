@@ -3,8 +3,7 @@ import { WardenToolkit } from "@wardenprotocol/warden-langchain";
 import { CONFIG } from "../config/config.js";
 import { logInfo, logError } from "../utils/logger.js";
 import { createAI } from "../services/aiService.js";
-import { getGasPrice } from "../services/gasPriceService.js";
-import { analyzeGasTrends } from "../services/aiService.js";
+import { setAgent } from "../services/agentManager.js";
 
 export async function startWardenAgent() {
     try {
@@ -19,26 +18,11 @@ export async function startWardenAgent() {
 
         const aiAgent = createAI(tools);
         const { agent, config } = await createAI(tools);
-        if (aiAgent) {
+        if (agent) {
+            setAgent(agent, config, tools);
             logInfo("AI-Powered Warden Agent is Ready!");
         } else {
             logError("AI Agent failed to initialize.");
-        }
-
-        try {
-            const gasPrice = await getGasPrice(tools);
-            if (gasPrice) {
-                logInfo(`Live Gas Price: ${gasPrice}`);
-            }
-        } catch (error) {
-            logError("Gas price monitoring failed", error);
-        }
-
-        try {
-            const prediction = await analyzeGasTrends(agent, config);
-            logInfo(`AI Prediction: ${prediction}`);
-        } catch (error) {
-            logError("Gas price prediction failed", error);
         }
 
     } catch (error) {
