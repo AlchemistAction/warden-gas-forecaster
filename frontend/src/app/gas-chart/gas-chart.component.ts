@@ -18,12 +18,11 @@ export class GasChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Set browser tab title
     document.title = "AI Gas Forecaster";
 
-    setTimeout(() => this.initializeChart(), 0); // Ensure ViewChild is loaded
+    setTimeout(() => this.initializeChart(), 0);
     this.fetchGasPrices();
-    setInterval(() => this.fetchGasPrices(), 5000); // Fetch new data every 5s
+    setInterval(() => this.fetchGasPrices(), 5000);
   }
 
   initializeChart() {
@@ -80,20 +79,17 @@ export class GasChartComponent implements OnInit {
     this.http.get<any>('http://localhost:3000/gas-prices').subscribe(data => {
       if (!data?.real || !data?.predicted || !this.chart) return;
 
-      const latestReal = data.real[data.real.length - 1]; // Get the last real price
-      const latestPredicted = data.predicted[data.predicted.length - 1]; // Get last predicted price
+      const latestReal = data.real[data.real.length - 1];
+      const latestPredicted = data.predicted[data.predicted.length - 1];
 
       const timestamp = new Date(latestReal.timestamp).toLocaleTimeString();
 
-      // ✅ Check if timestamp already exists to prevent duplicates
       if (this.labels.includes(timestamp)) return;
 
-      // ✅ Add new point while keeping old points fixed
       this.labels.push(timestamp);
       this.realPrices.push(latestReal.price);
       this.predictedPrices.push(latestPredicted.price || 0);
 
-      // ✅ Limit total points to 30 (remove oldest when exceeding)
       const maxPoints = 30;
       if (this.labels.length > maxPoints) {
         this.labels.shift();
@@ -101,19 +97,15 @@ export class GasChartComponent implements OnInit {
         this.predictedPrices.shift();
       }
 
-      // ✅ Ensure chart updates properly
       this.chart.data.labels = [...this.labels];
       this.chart.data.datasets[0].data = [...this.realPrices];
       this.chart.data.datasets[1].data = [...this.predictedPrices];
 
       this.chart.update();
 
-      // ✅ Update latest prices display
       (document.getElementById("realPrice") as HTMLElement).innerText = latestReal.price.toFixed(2);
       (document.getElementById("predictedPrice") as HTMLElement).innerText = latestPredicted.price.toFixed(2);
     });
   }
-
-
 
 }
