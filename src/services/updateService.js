@@ -27,5 +27,5 @@ async function updateGasPredictions() {
         logError("Error updating gas price predictions", error);
     }
 }
-setInterval(updateGasPrices, 10000);
-setInterval(updateGasPredictions, 30000);
+setInterval(updateGasPrices, 3000);
+setInterval(updateGasPredictions, 10000);

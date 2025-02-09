@@ -1,1 +1,78 @@
-/* You can add global styles to this file, and also import other style files */
+/* 1️⃣ Full-page layout with a soft background */
+html, body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f3e7e9, #e3e1d9, #d4d3c9); /* Soft warm gradient */
+  margin: 0;
+  overflow: hidden;
+}
+
+/* 2️⃣ App Title */
+.app-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* 1️⃣ Make Chart Wider */
+.chart-container {
+  width: 80%;  /* ✅ Increased width */
+  max-width: 1100px;
+  min-width: 800px;
+  min-height: 500px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border: 3px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* 2️⃣ Ensure the canvas stretches */
+.chart-container canvas {
+  width: 100% !important;
+  height: 450px !important;  /* ✅ More height for better visibility */
+}
+
+/* 5️⃣ Price Container on the Right */
+.price-container {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  text-align: right;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 6️⃣ Price Text */
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 7️⃣ Fixed Logo in Top Left */
+.logo-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+/* 8️⃣ Increase Logo Size */
+.logo-container img {
+  width: 180px;
+  height: auto;
+}

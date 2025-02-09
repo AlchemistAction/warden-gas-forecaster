@@ -1,11 +1,11 @@
-const realGasPrices = [];
-const predictedGasPrices = [];
+const realGasPrices = [{ timestamp: new Date().toISOString(), price: 0 }];
+const predictedGasPrices = [{ timestamp: new Date().toISOString(), price: 0 }];
 
 export function addRealGasPrice(price) {
     const timestamp = new Date().toISOString();
     realGasPrices.push({ timestamp, price });
 
-    if (realGasPrices.length > 100) {
+    if (realGasPrices.length > 50) {
         realGasPrices.shift();
     }
 }
@@ -14,7 +14,7 @@ export function addPredictedGasPrice(price) {
     const timestamp = new Date().toISOString();
     predictedGasPrices.push({ timestamp, price });
 
-    if (predictedGasPrices.length > 100) {
+    if (predictedGasPrices.length > 50) {
         predictedGasPrices.shift();
     }
 }
