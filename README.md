@@ -12,7 +12,7 @@ An AI-powered gas price prediction tool that fetches real-time Ethereum gas pric
 git clone https://github.com/yourusername/warden-gas-forecaster.git
 cd warden-gas-forecaster
 ```
-### 2️⃣ Set Up the Backend
+### 2️⃣ Set Up the Backend (requires nvm 18+)
 ``` bash
 cd backend  
 npm install  
